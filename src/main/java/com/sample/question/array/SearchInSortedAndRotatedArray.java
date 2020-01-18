@@ -58,7 +58,7 @@ public class SearchInSortedAndRotatedArray {
 
            return binarySearch(arr,startIndex,mid-1,key);
         }
-return -1;
+           return -1;
     }
 
     public static void main(String[] args) {
