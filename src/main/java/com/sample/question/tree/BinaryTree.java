@@ -9,9 +9,6 @@ public class BinaryTree {
     TreeNode right;
 
 
-
-
-
     void preOrder(TreeNode root) {
         if (root == null) return;
 
@@ -35,6 +32,11 @@ public class BinaryTree {
         inOrder(root.right);
     }
 
+    /**
+     * this programs gets timeout
+     *
+     * @param treeNode
+     */
     void levelOrderRecursive(TreeNode treeNode) {
         if (treeNode == null) return;
         Queue<TreeNode> q = new LinkedList<>();
@@ -51,6 +53,57 @@ public class BinaryTree {
             }
         }
     }
+
+    List<List<Integer>> levels = new ArrayList<List<Integer>>();
+
+    public List<List<Integer>> levelOrderItr(TreeNode root) {
+
+        if (root == null) return levels;
+        helper(root, 0);
+        return levels;
+
+
+    }
+
+    public void helper(TreeNode node, int level) {
+        // start the current level
+        if (levels.size() == level)
+            levels.add(new ArrayList<Integer>());
+
+        // fulfil the current level
+        levels.get(level).add(node.val);
+
+        // process child nodes for the next level
+        if (node.left != null)
+            helper(node.left, level + 1);
+        if (node.right != null)
+            helper(node.right, level + 1);
+    }
+    public List<List<Integer>> levelOrderV2(TreeNode root){
+        List<List<Integer>> ans = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        if (root != null) {
+            q.offer(root);
+        }
+        TreeNode cur;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            List<Integer> subAns = new LinkedList<Integer>();
+            for (int i = 0; i < size; ++i) {        // traverse nodes in the same level
+                cur = q.poll();
+                subAns.add(cur.val);                // visit the root
+                if (cur.left != null) {
+                    q.offer(cur.left);              // push left child to queue if it is not null
+                }
+                if (cur.right != null) {
+                    q.offer(cur.right);             // push right child to queue if it is not null
+                }
+            }
+            ans.add(subAns);
+        }
+        return ans;
+    }
+
 
     public Map<Integer, List<Integer>> verticalOrder(TreeNode root) {
         Map<Integer, List<Integer>> map = new TreeMap<>();
@@ -99,7 +152,7 @@ public class BinaryTree {
         return 1 + Math.max(getheight(treeNode.left), getheight(treeNode.right));
     }
 
-    public static TreeNode createTree(){
+    public static TreeNode createTree() {
         TreeNode root = new TreeNode(1);
         root.left = new TreeNode(2);
         root.right = new TreeNode(3);
@@ -128,7 +181,7 @@ public class BinaryTree {
 
  */
         //  tree.verticalOrder(root);
-        tree.verticalSumOfTree(root);
+        tree.levelOrderV2(root);
     }
 
 }
