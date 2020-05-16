@@ -21,4 +21,9 @@ public class FirstUniqueChar {
         }
         return -1;
     }
+
+    public static void main(String[] args) {
+        String s ="leetcode";
+        System.out.println(new FirstUniqueChar().firstUniqChar(s));
+    }
 }
